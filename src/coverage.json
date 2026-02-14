@@ -1,0 +1,247 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-14T16:37:16.827Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 8,
+    "implemented": 8,
+    "items": [
+      {
+        "id": "REQ-1",
+        "summary": "Implement the core trivia gameplay UI in the React frontend to match the provided HTML app: header (logo/title, level badge, share button, mute/play toggle), progress bar, quiz area (question + four multiple-choice answers), level-up celebration overlay (Continue + Share), and a bottom ad placeholder banner.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/components/GameHeader.tsx",
+          "frontend/src/components/QuestionCard.tsx",
+          "frontend/src/components/LevelUpOverlay.tsx",
+          "frontend/src/components/AdPlaceholderBanner.tsx",
+          "frontend/src/components/ProgressBar.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/components/GameHeader.tsx",
+          "frontend/src/components/QuestionCard.tsx",
+          "frontend/src/components/LevelUpOverlay.tsx",
+          "frontend/src/components/AdPlaceholderBanner.tsx",
+          "frontend/src/components/ProgressBar.tsx"
+        ]
+      },
+      {
+        "id": "REQ-2",
+        "summary": "Integrate OpenTDB question fetching in the frontend using the same endpoints and logic as the provided code: request a session token from https://opentdb.com/api_token.php?command=request and fetch one multiple-choice question at a time from https://opentdb.com/api.php?amount=1&type=multiple&token=TOKEN, including handling OpenTDB response codes 3/4 by renewing the token and retrying.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/lib/opentdb.ts",
+          "frontend/src/hooks/useOpenTdbQuestion.ts",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/lib/opentdb.ts",
+          "frontend/src/hooks/useOpenTdbQuestion.ts",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Implement leveling/progression rules exactly as provided: maintain state fields (level, correctCount) where the per-level goal is computed as goal = 5 + (level * 2); increment correctCount on correct answers; when correctCount >= goal, increment level and reset correctCount to 0 and show the level-up overlay.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/lib/progression.ts",
+          "frontend/src/App.tsx",
+          "frontend/src/components/ProgressBar.tsx",
+          "frontend/src/components/LevelUpOverlay.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/lib/progression.ts",
+          "frontend/src/App.tsx",
+          "frontend/src/components/ProgressBar.tsx",
+          "frontend/src/components/LevelUpOverlay.tsx"
+        ]
+      },
+      {
+        "id": "REQ-4",
+        "summary": "Persist player progress (level and correctCount) in browser localStorage using the same storage key q2_official_save; on app load, restore saved progress if present.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/lib/persistence.ts",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/lib/persistence.ts",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-5",
+        "summary": "Add share-score functionality in the frontend with Web Share API and clipboard fallback, based on the provided logic, but ensure the shared/copied message is English-only (no emoji characters).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/lib/share.ts",
+          "frontend/src/components/GameHeader.tsx",
+          "frontend/src/components/LevelUpOverlay.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/lib/share.ts",
+          "frontend/src/components/GameHeader.tsx",
+          "frontend/src/components/LevelUpOverlay.tsx"
+        ]
+      },
+      {
+        "id": "REQ-6",
+        "summary": "Add background music playback with a mute/play toggle using the provided audio source URL (https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3) and initialize the app with audio muted until the user enables playback.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useBackgroundMusic.ts",
+          "frontend/src/components/GameHeader.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useBackgroundMusic.ts",
+          "frontend/src/components/GameHeader.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-7",
+        "summary": "Apply a coherent visual theme across the frontend inspired by the provided design (emerald/green primary, warm light background, card-like mobile container), implemented with Tailwind styling and shadcn UI composition where appropriate, without using a blue/purple primary theme.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/index.css",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/index.css",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-8",
+        "summary": "Generate and include a simple static app logo image asset and render it in the header in place of (or alongside) the text-only \"Q2\" logo block.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/public/assets/generated/q2-answers-logo.dim_256x256.png",
+          "frontend/src/components/GameHeader.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/public/assets/generated/q2-answers-logo.dim_256x256.png",
+          "frontend/src/components/GameHeader.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "backend/main.mo",
+    "build-request.json",
+    "build-template/Dockerfile",
+    "build-template/LICENSE",
+    "build-template/README.md",
+    "build-template/deploy.sh",
+    "build-template/icp.yaml",
+    "build-template/package.json",
+    "build-template/pnpm-lock.yaml",
+    "build-template/pnpm-workspace.yaml",
+    "build-template/scripts/prune-unused-images.js",
+    "build-template/scripts/resize-images.js",
+    "build-template/src/backend/canister.yaml",
+    "build-template/src/backend/system-idl/aaaaa-aa.did",
+    "build-template/src/frontend/canister.yaml",
+    "build-template/src/frontend/components.json",
+    "build-template/src/frontend/env.json",
+    "build-template/src/frontend/eslint-rules/no-bigint-in-query-keys.js",
+    "build-template/src/frontend/eslint-rules/require-internet-identity-provider.js",
+    "build-template/src/frontend/eslint.config.js",
+    "build-template/src/frontend/package.json",
+    "build-template/src/frontend/postcss.config.js",
+    "build-template/src/frontend/src/components/ui/accordion.tsx",
+    "build-template/src/frontend/src/components/ui/alert-dialog.tsx",
+    "build-template/src/frontend/src/components/ui/alert.tsx",
+    "build-template/src/frontend/src/components/ui/aspect-ratio.tsx",
+    "build-template/src/frontend/src/components/ui/avatar.tsx",
+    "build-template/src/frontend/src/components/ui/badge.tsx",
+    "build-template/src/frontend/src/components/ui/breadcrumb.tsx",
+    "build-template/src/frontend/src/components/ui/button.tsx",
+    "build-template/src/frontend/src/components/ui/calendar.tsx",
+    "build-template/src/frontend/src/components/ui/card.tsx",
+    "build-template/src/frontend/src/components/ui/carousel.tsx",
+    "build-template/src/frontend/src/components/ui/chart.tsx",
+    "build-template/src/frontend/src/components/ui/checkbox.tsx",
+    "build-template/src/frontend/src/components/ui/collapsible.tsx",
+    "build-template/src/frontend/src/components/ui/command.tsx",
+    "build-template/src/frontend/src/components/ui/context-menu.tsx",
+    "build-template/src/frontend/src/components/ui/dialog.tsx",
+    "build-template/src/frontend/src/components/ui/drawer.tsx",
+    "build-template/src/frontend/src/components/ui/dropdown-menu.tsx",
+    "build-template/src/frontend/src/components/ui/form.tsx",
+    "build-template/src/frontend/src/components/ui/hover-card.tsx",
+    "build-template/src/frontend/src/components/ui/input-otp.tsx",
+    "build-template/src/frontend/src/components/ui/input.tsx",
+    "build-template/src/frontend/src/components/ui/label.tsx",
+    "build-template/src/frontend/src/components/ui/menubar.tsx",
+    "build-template/src/frontend/src/components/ui/navigation-menu.tsx",
+    "build-template/src/frontend/src/components/ui/pagination.tsx",
+    "build-template/src/frontend/src/components/ui/popover.tsx",
+    "build-template/src/frontend/src/components/ui/progress.tsx",
+    "build-template/src/frontend/src/components/ui/radio-group.tsx",
+    "build-template/src/frontend/src/components/ui/resizable.tsx",
+    "build-template/src/frontend/src/components/ui/scroll-area.tsx",
+    "build-template/src/frontend/src/components/ui/select.tsx",
+    "build-template/src/frontend/src/components/ui/separator.tsx",
+    "build-template/src/frontend/src/components/ui/sheet.tsx",
+    "build-template/src/frontend/src/components/ui/sidebar.tsx",
+    "build-template/src/frontend/src/components/ui/skeleton.tsx",
+    "build-template/src/frontend/src/components/ui/slider.tsx",
+    "build-template/src/frontend/src/components/ui/sonner.tsx",
+    "build-template/src/frontend/src/components/ui/switch.tsx",
+    "build-template/src/frontend/src/components/ui/table.tsx",
+    "build-template/src/frontend/src/components/ui/tabs.tsx",
+    "build-template/src/frontend/src/components/ui/textarea.tsx",
+    "build-template/src/frontend/src/components/ui/toggle-group.tsx",
+    "build-template/src/frontend/src/components/ui/toggle.tsx",
+    "build-template/src/frontend/src/components/ui/tooltip.tsx",
+    "build-template/src/frontend/src/hooks/use-mobile.tsx",
+    "build-template/src/frontend/src/lib/utils.ts",
+    "build-template/src/frontend/tsconfig.json",
+    "build-template/src/frontend/vite.config.js",
+    "build-template/tsconfig.json",
+    "caffeine.lock.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/public/assets/generated/q2-answers-logo.dim_256x256.png",
+    "frontend/src/App.tsx",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/AdPlaceholderBanner.tsx",
+    "frontend/src/components/GameHeader.tsx",
+    "frontend/src/components/LevelUpOverlay.tsx",
+    "frontend/src/components/ProgressBar.tsx",
+    "frontend/src/components/QuestionCard.tsx",
+    "frontend/src/config.ts",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useBackgroundMusic.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useOpenTdbQuestion.ts",
+    "frontend/src/index.css",
+    "frontend/src/lib/opentdb.ts",
+    "frontend/src/lib/persistence.ts",
+    "frontend/src/lib/progression.ts",
+    "frontend/src/lib/share.ts",
+    "frontend/src/main.tsx",
+    "frontend/src/ui-summary.json",
+    "frontend/src/utils/StorageClient.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

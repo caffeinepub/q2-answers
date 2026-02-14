@@ -1,2 +1,3 @@
-# q2-answers
-Exported from Caffeine project: Q2 ANSWERS
+## Q2 ANSWERS
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

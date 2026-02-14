@@ -1,0 +1,68 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-14T16:37:16.824Z",
+  "summary": "Most frontend gameplay requirements appear implemented (UI layout, OpenTDB fetching with token renewal, leveling/progress bar, localStorage persistence, share flow, and background music). However, there are likely gaps/violations around required English-only control labels (mute/play) and the visual theme constraint (blue-toned button). Additionally, unrequested backend and immutable-path files were introduced.",
+  "missing_requirements": [
+    {
+      "id": "REQ-6",
+      "requirement": "The mute/play toggle control label is English-only (no emoji characters).",
+      "reason": "The header music toggle is icon-only (VolumeX/Volume2) with no visible English text label shown in the diff.",
+      "evidence": [
+        "frontend/src/components/GameHeader.tsx"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "requirement": "Apply a coherent emerald/green primary theme and avoid a blue/purple primary theme.",
+      "reason": "The level-up overlay 'SHARE' button uses a distinctly blue hue (OKLCH hue ~220), which conflicts with the requirement to avoid blue/purple primary theming.",
+      "evidence": [
+        "frontend/src/components/LevelUpOverlay.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Added an empty backend Motoko actor (backend/main.mo) even though backend changes were not required.",
+      "reason": "BuildRequest states backend changes are not required for this request; adding a backend file is unrequested scope.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "Introduced/changed files under paths that were declared immutable (useActor.ts, main.tsx, useInternetIdentity.ts).",
+      "reason": "BuildRequest constraints specify these frontend paths must not be edited; the diff shows these files being added.",
+      "evidence": [
+        "frontend/src/hooks/useActor.ts",
+        "frontend/src/main.tsx",
+        "frontend/src/hooks/useInternetIdentity.ts"
+      ]
+    }
+  ],
+  "confidence": 0.64,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/AdPlaceholderBanner.tsx",
+    "frontend/src/components/GameHeader.tsx",
+    "frontend/src/components/LevelUpOverlay.tsx",
+    "frontend/src/components/ProgressBar.tsx",
+    "frontend/src/components/QuestionCard.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useBackgroundMusic.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useOpenTdbQuestion.ts",
+    "frontend/src/index.css",
+    "frontend/src/lib/opentdb.ts",
+    "frontend/src/lib/persistence.ts",
+    "frontend/src/lib/progression.ts",
+    "frontend/src/lib/share.ts",
+    "frontend/src/main.tsx",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

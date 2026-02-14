@@ -1,0 +1,165 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-implement-the-core-trivia-gameplay-ui-in-the-react-frontend-to-match-the-provided-html-app-header-logo-title-level-badge-share-button-mute-play-toggle-progress-bar-quiz-area-question-four-multiple-choice-answers-level-up-celebration-overlay-continue-share-and-a-bottom-ad-placeholder-banner",
+      "featureTitle": "Implement the core trivia gameplay UI in the React frontend to match the provided HTML app: header (logo/title, level badge, share button, mute/play toggle), progress bar, quiz area (question + four multiple-choice answers), level-up celebration overlay (Continue + Share), and a bottom ad placeholder banner.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/AdPlaceholderBanner.tsx",
+        "frontend/src/components/GameHeader.tsx",
+        "frontend/src/components/LevelUpOverlay.tsx",
+        "frontend/src/components/ProgressBar.tsx",
+        "frontend/src/components/QuestionCard.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-integrate-opentdb-question-fetching-in-the-frontend-using-the-same-endpoints-and-logic-as-the-provided-code-request-a-session-token-from-https-opentdb-com-api-token-php-command-request-and-fetch-one-multiple-choice-question-at-a-time-from-https-opentdb-com-api-php-amount-1-type-multiple-token-token-including-handling-opentdb-response-codes-3-4-by-renewing-the-token-and-retrying",
+      "featureTitle": "Integrate OpenTDB question fetching in the frontend using the same endpoints and logic as the provided code: request a session token from https://opentdb.com/api_token.php?command=request and fetch one multiple-choice question at a time from https://opentdb.com/api.php?amount=1&type=multiple&token=TOKEN, including handling OpenTDB response codes 3/4 by renewing the token and retrying.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/hooks/useOpenTdbQuestion.ts",
+        "frontend/src/lib/opentdb.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-leveling-progression-rules-exactly-as-provided-maintain-state-fields-level-correctcount-where-the-per-level-goal-is-computed-as-goal-5-level-2-increment-correctcount-on-correct-answers-when-correctcount-goal-increment-level-and-reset-correctcount-to-0-and-show-the-level-up-overlay",
+      "featureTitle": "Implement leveling/progression rules exactly as provided: maintain state fields (level, correctCount) where the per-level goal is computed as goal = 5 + (level * 2); increment correctCount on correct answers; when correctCount >= goal, increment level and reset correctCount to 0 and show the level-up overlay.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/LevelUpOverlay.tsx",
+        "frontend/src/components/ProgressBar.tsx",
+        "frontend/src/lib/progression.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-persist-player-progress-level-and-correctcount-in-browser-localstorage-using-the-same-storage-key-q2-official-save-on-app-load-restore-saved-progress-if-present",
+      "featureTitle": "Persist player progress (level and correctCount) in browser localStorage using the same storage key q2_official_save; on app load, restore saved progress if present.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/lib/persistence.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-share-score-functionality-in-the-frontend-with-web-share-api-and-clipboard-fallback-based-on-the-provided-logic-but-ensure-the-shared-copied-message-is-english-only-no-emoji-characters",
+      "featureTitle": "Add share-score functionality in the frontend with Web Share API and clipboard fallback, based on the provided logic, but ensure the shared/copied message is English-only (no emoji characters).",
+      "files": [
+        "frontend/src/components/GameHeader.tsx",
+        "frontend/src/components/LevelUpOverlay.tsx",
+        "frontend/src/lib/share.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-background-music-playback-with-a-mute-play-toggle-using-the-provided-audio-source-url-https-www-soundhelix-com-examples-mp3-soundhelix-song-1-mp3-and-initialize-the-app-with-audio-muted-until-the-user-enables-playback",
+      "featureTitle": "Add background music playback with a mute/play toggle using the provided audio source URL (https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3) and initialize the app with audio muted until the user enables playback.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/GameHeader.tsx",
+        "frontend/src/hooks/useBackgroundMusic.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-coherent-visual-theme-across-the-frontend-inspired-by-the-provided-design-emerald-green-primary-warm-light-background-card-like-mobile-container-implemented-with-tailwind-styling-and-shadcn-ui-composition-where-appropriate-without-using-a-blue-purple-primary-theme",
+      "featureTitle": "Apply a coherent visual theme across the frontend inspired by the provided design (emerald/green primary, warm light background, card-like mobile container), implemented with Tailwind styling and shadcn UI composition where appropriate, without using a blue/purple primary theme.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/index.css"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-generate-and-include-a-simple-static-app-logo-image-asset-and-render-it-in-the-header-in-place-of-or-alongside-the-text-only-q2-logo-block",
+      "featureTitle": "Generate and include a simple static app logo image asset and render it in the header in place of (or alongside) the text-only \"Q2\" logo block.",
+      "files": [
+        "frontend/src/components/GameHeader.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

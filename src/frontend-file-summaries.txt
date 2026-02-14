@@ -1,0 +1,16 @@
+{
+  "frontend/src/App.tsx": "Main application component managing game state (level, correctCount), question loading, answer handling, level-up overlay, and progress persistence using localStorage.",
+  "frontend/src/components/GameHeader.tsx": "Header component displaying the Q2 logo with image fallback, level badge, share button, and music toggle control.",
+  "frontend/src/components/QuestionCard.tsx": "Question display component rendering the question text and four multiple-choice answer buttons with correct/wrong state styling and locked interaction handling.",
+  "frontend/src/components/LevelUpOverlay.tsx": "Full-screen modal overlay celebrating level-up achievements with animated trophy icon, Continue and Share action buttons.",
+  "frontend/src/components/ProgressBar.tsx": "Progress bar component displaying visual progress toward the next level using shadcn Progress component.",
+  "frontend/src/components/AdPlaceholderBanner.tsx": "Bottom banner placeholder component reserved for future ad integration.",
+  "frontend/src/lib/opentdb.ts": "OpenTDB API client handling session token management, question fetching with retry logic for response codes 3/4, HTML decoding, and answer shuffling.",
+  "frontend/src/lib/progression.ts": "Pure helper functions for computing level goals (5 + level*2), progress percentages, and applying answer results with level-up detection.",
+  "frontend/src/lib/persistence.ts": "localStorage helpers for saving and loading game progress using the exact key \"q2_official_save\".",
+  "frontend/src/lib/share.ts": "Share functionality using Web Share API with clipboard fallback for sharing level achievements.",
+  "frontend/src/hooks/useOpenTdbQuestion.ts": "React hook managing question loading from OpenTDB with automatic retry on failure and next-question loading.",
+  "frontend/src/hooks/useBackgroundMusic.ts": "React hook managing looping background music playback with mute/play toggle, starting muted by default.",
+  "frontend/src/index.css": "Global styles with OKLCH color system defining emerald/green primary theme with warm neutral backgrounds for light and dark modes.",
+  "frontend/tailwind.config.js": "Tailwind configuration with emerald/green color palette, custom border radius, and animation utilities."
+}

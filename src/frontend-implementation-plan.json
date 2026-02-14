@@ -1,0 +1,227 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Q2 ANSWERS React trivia game (levels, persistence, share, audio)",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Build the core single-page trivia gameplay UI (header, progress, question/answers, level-up overlay, ad placeholder) matching the provided HTML app behavior.",
+      "acceptanceCriteria": [
+        "The app renders a single-page mobile-friendly game container with a header, progress bar, quiz area, and ad placeholder banner.",
+        "Answer options are rendered as clickable buttons; after selection, buttons are locked until the next question is loaded.",
+        "Correct selection highlights the selected answer as correct; incorrect selection highlights the selected answer as wrong and also highlights the correct answer as correct.",
+        "A level-up overlay is displayed when the player reaches the level goal, with Continue and Share actions.",
+        "All user-facing text is in English (do not include emoji characters in labels/messages)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the single-page game container UI: header (logo/title, level badge, Share button, mute/play toggle), progress bar, question card with four answer buttons, level-up overlay (Continue + Share), and bottom ad placeholder banner. Use shadcn-ui components (e.g., Button/Card/Dialog or equivalent) to compose the UI where appropriate; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/GameHeader.tsx",
+          "operation": "create",
+          "description": "Create a header component that renders the logo/title, level badge (LV {level}), Share action, and mute/play toggle action; keep all labels/messages English-only (no emoji). Use shadcn-ui components for buttons/badges where appropriate; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/QuestionCard.tsx",
+          "operation": "create",
+          "description": "Create a question + answers component that renders the current question and four multiple-choice answers as clickable buttons, supports locked state after selection, and applies correct/wrong highlighting per selection rules. Use shadcn-ui Button/Card composition where appropriate; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/LevelUpOverlay.tsx",
+          "operation": "create",
+          "description": "Create a full-cover overlay that appears on level-up with a celebration UI plus Continue and Share actions; overlay must block underlying interactions until dismissed. Use a shadcn-ui Dialog/Modal pattern if available; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/AdPlaceholderBanner.tsx",
+          "operation": "create",
+          "description": "Create a bottom banner placeholder component reserved for ads (non-functional) that visually matches the app theme and remains present on the game screen."
+        },
+        {
+          "path": "frontend/src/components/ProgressBar.tsx",
+          "operation": "create",
+          "description": "Create a progress bar component that renders fill based on the provided computed percent and theme styling. If using a shadcn-ui progress component, verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Implement OpenTDB session token acquisition and per-question fetching with HTML decoding, retry handling, and token renewal for response codes 3/4.",
+      "acceptanceCriteria": [
+        "On initial load, the app requests an OpenTDB session token and stores it in memory for subsequent question requests.",
+        "The app fetches and displays one multiple-choice question at a time from OpenTDB.",
+        "If OpenTDB returns response_code 3 or 4, the app requests a new token and retries fetching a question automatically.",
+        "If a fetch fails or OpenTDB returns a non-0 non-3/4 response code, the app retries after a short delay without crashing the UI.",
+        "Question text and answer text are HTML-decoded before display."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/lib/opentdb.ts",
+          "operation": "create",
+          "description": "Add OpenTDB client helpers to request a session token, fetch a single multiple-choice question using the stored token, HTML-decode question/answer strings, and implement response_code handling (0 success; 3/4 renew token + retry; other codes retry after a short delay)."
+        },
+        {
+          "path": "frontend/src/hooks/useOpenTdbQuestion.ts",
+          "operation": "create",
+          "description": "Create a React hook that coordinates initial token request, one-question-at-a-time loading, safe retries after short delays on failures/non-0 non-3/4 codes, and exposes loading/error-safe state for the UI."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the OpenTDB hook into the UI flow so the app loads an initial question on mount and loads subsequent questions after each round, without UI crashes during retry periods."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Implement leveling/progression rules (goal = 5 + level*2) with correctCount tracking, progress bar updates, and level-up overlay gating next question until Continue.",
+      "acceptanceCriteria": [
+        "The progress bar fill percentage is computed as (correctCount / goal) * 100 and clamped to 0–100.",
+        "Level badge shows the current level as \"LV {level}\".",
+        "After a correct answer that completes the goal, the level-up overlay appears and the next question does not load until Continue is clicked.",
+        "Clicking Continue closes the overlay and loads the next question.",
+        "Progress is updated after each question resolution and after leveling up."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/lib/progression.ts",
+          "operation": "create",
+          "description": "Add pure helpers for computing per-level goal (5 + level*2), clamped progress percentage, and applying answer results to progression state (increment correctCount on correct; on reaching goal, increment level, reset correctCount, and signal level-up)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Integrate progression helpers so correct answers update correctCount, reaching goal triggers a level-up overlay (and pauses auto-loading the next question until Continue), and the progress bar/level badge update immediately after resolution and after leveling."
+        },
+        {
+          "path": "frontend/src/components/ProgressBar.tsx",
+          "operation": "modify",
+          "description": "Ensure the progress bar renders the clamped computed percent and visually reflects progression within the emerald/green theme."
+        },
+        {
+          "path": "frontend/src/components/LevelUpOverlay.tsx",
+          "operation": "modify",
+          "description": "Wire Continue behavior to close the overlay and trigger loading the next question only after dismissal."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Persist and restore player progress (level, correctCount) using localStorage key q2_official_save.",
+      "acceptanceCriteria": [
+        "Refreshing the page restores the last saved level and correctCount values.",
+        "The localStorage key name is exactly \"q2_official_save\".",
+        "Progress is saved after each answered question and after leveling up."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/lib/persistence.ts",
+          "operation": "create",
+          "description": "Add localStorage persistence helpers to load and save progress using the exact key \"q2_official_save\", handling absent/invalid data safely."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Restore saved progress on app load and save progress after each answered question resolution and after leveling up, using the persistence helpers and the exact required storage key."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Add share-score functionality via Web Share API with clipboard fallback (English-only message) accessible from header and level-up overlay.",
+      "acceptanceCriteria": [
+        "Share controls are available from both the header and the level-up overlay.",
+        "If navigator.share is available, invoking Share opens the native share dialog with title \"Q2 ANSWERS\", a text message containing the current level, and the current page URL.",
+        "If navigator.share is unavailable, clicking Share copies the share text to the clipboard and displays an English-only confirmation message (no emojis)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/lib/share.ts",
+          "operation": "create",
+          "description": "Implement a share helper that builds an English-only share message including current level and uses Web Share API when available, otherwise copies to clipboard and shows an English-only confirmation message (no emoji)."
+        },
+        {
+          "path": "frontend/src/components/GameHeader.tsx",
+          "operation": "modify",
+          "description": "Wire the Share button to call the share helper with the current level and current page URL. Use shadcn-ui Button where appropriate; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/LevelUpOverlay.tsx",
+          "operation": "modify",
+          "description": "Wire the overlay Share action to call the same share helper with the current level and current page URL. Use shadcn-ui Button where appropriate; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Add looping background music with mute/play toggle, default muted, and user-gesture-safe playback behavior.",
+      "acceptanceCriteria": [
+        "The app loads with music muted/off by default.",
+        "Toggling the control starts playback (handling autoplay restrictions by only attempting play after user interaction) and toggling again pauses playback.",
+        "The toggle control label is English-only (no emoji characters).",
+        "Music loops during gameplay when enabled."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useBackgroundMusic.ts",
+          "operation": "create",
+          "description": "Create a hook to manage an HTMLAudioElement configured to loop the provided source URL, default to muted/off, and expose a toggle that only attempts playback in response to user interaction (handling play() promise rejections safely)."
+        },
+        {
+          "path": "frontend/src/components/GameHeader.tsx",
+          "operation": "modify",
+          "description": "Connect the mute/play toggle control to the background music hook, ensure the label is English-only (no emoji), and reflect current audio state in the UI. Use shadcn-ui Button where appropriate; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Initialize and provide the background music state needed by the header toggle, ensuring the app starts muted/off by default and audio loops when enabled."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Apply an emerald/green primary visual theme with warm light background and card-like mobile container styling using Tailwind and shadcn UI composition (no blue/purple primary).",
+      "acceptanceCriteria": [
+        "UI uses a consistent palette with an emerald/green primary and warm neutral background, and avoids a blue/purple primary theme.",
+        "The main game container is centered with a max width suitable for mobile (similar to ~500px) and has a subtle shadow and rounded corners.",
+        "Correct/wrong states are visually distinct and accessible (contrast sufficient to read text).",
+        "The level-up overlay visually stands out and covers the game container content when visible."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Add global Tailwind base/components/utilities imports and set theme CSS variables for a warm light background and emerald/green primary (avoiding blue/purple primary). Define accessible colors for correct/wrong states and overlay backdrop styling in a way compatible with shadcn-ui theming."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Apply Tailwind layout styling to center a mobile-friendly container (max width ~500px), add rounded corners and subtle shadow, and ensure overlay layering/coverage and correct/wrong state styling meet accessibility/contrast needs."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Include a generated static logo asset and render it in the header with a text fallback if it fails to load.",
+      "acceptanceCriteria": [
+        "A generated logo image is added under frontend/public/assets/generated and displayed in the header at approximately 40x40px.",
+        "If the image fails to load, the UI still shows a readable fallback (e.g., text \"Q2\")."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/q2-answers-logo.dim_256x256.png",
+          "operation": "create",
+          "description": "Add the generated logo image asset (flat icon with bold \"Q2\" lettering on an emerald green rounded-square background) at the exact required path frontend/public/assets/generated/q2-answers-logo.dim_256x256.png."
+        },
+        {
+          "path": "frontend/src/components/GameHeader.tsx",
+          "operation": "modify",
+          "description": "Render the logo image in the header at ~40x40px and implement a readable text fallback (e.g., \"Q2\") if the image fails to load."
+        }
+      ]
+    }
+  ]
+}
